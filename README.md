@@ -3,32 +3,6 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
 
 See at: https://portfolio.peti.work
 
-## Feature list
-* [x] Protein calculator [(in prod link)](https://protein.peti.work)
-  * [x] Whey cost and content
-  * [x] Snack cost and content
-  * [x] Option to submit to database
-* [x] Venmo requests calculator[(in prod link)](https://payme.peti.work)
-  * [x] Customized prefilled venmo link
-  * [x] Option to submit to database
-* [ ] Covid dashboard (WIP) (see portfolio)
-  * [x] Premade plots
-  * [x] Usermade plots
-    * [x] Group by string variables
-    * [x] Date only on x-axis
-    * [x] Floats and integers on x-, y-axes but not legend
-    * [ ] Only categorical variables in legend
-    * [ ] Ability to choose countries outside plotly
-    * [x] Dynamic plot title
-  * [ ] Premade dataset summary
-    * [x] Descriptive statistics
-    * [ ] Comparative statistics
-    * [ ] Predictive statistics
-    * [x] Usermade customizable dataset summary
-    * [ ] Download customized dataset
-  * [ ] Premade heatmaps
-  * [ ] Usermade heatmaps
-
 # Screenshot
 <img src="https://github.com/pomkos/portfolio/blob/main/sample.png" width="620">
 
@@ -93,3 +67,29 @@ crontab -e
 ```
 
 5. Access the portfolio at `localhost:8503`
+
+# Feature list
+* [x] Protein calculator [(in prod link)](https://protein.peti.work)
+  * [x] Whey cost and content
+  * [x] Snack cost and content
+  * [x] Option to submit to database
+* [x] Venmo requests calculator[(in prod link)](https://payme.peti.work)
+  * [x] Customized prefilled venmo link
+  * [x] Option to submit to database
+* [ ] Covid dashboard (WIP) (see portfolio)
+  * [x] Premade plots
+  * [x] Usermade plots
+    * [x] Group by string variables
+    * [x] Date only on x-axis
+    * [x] Floats and integers on x-, y-axes but not legend
+    * [ ] Only categorical variables in legend
+    * [ ] Ability to choose countries outside plotly
+    * [x] Dynamic plot title
+  * [ ] Premade dataset summary
+    * [x] Descriptive statistics
+    * [ ] Comparative statistics
+    * [ ] Predictive statistics
+    * [x] Usermade customizable dataset summary
+    * [ ] Download customized dataset
+  * [ ] Premade heatmaps
+  * [ ] Usermade heatmaps
