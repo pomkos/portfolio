@@ -61,10 +61,12 @@ def scat_plotter(x,y,hue='location'):
                    })
     return my_plot
 
-def line_plotter(x,y,date_selected, hue='location'):
+def line_plotter(x,y,date_selected, hue='location',xlog=False,ylog=False):
     '''Plotly plots a lineplot'''
     my_plot = px.line(df,
                  x= x,
+                 log_x = xlog,
+                 log_y = ylog,
                  y= y,
                  range_x = date_selected,
                  color=hue,
@@ -101,15 +103,17 @@ def build_own(x_options,y_options,hue_options,date_selected):
     col_x, col_y, col_hue = st.beta_columns(3)
     with col_x:
         x_default = find_default(x_options,'date')
-        x = st.selectbox('X axis',x_options, format_func = str_formatter, index=x_default)        
+        x = st.selectbox('X axis',x_options, format_func = str_formatter, index=x_default)
+        xlog = st.checkbox('log(x axis)')
     with col_y:
         y_default = find_default(y_options, "new_cases_smoothed_per_million")
         y = st.selectbox('Y axis',y_options, format_func = str_formatter, index=y_default)
+        ylog = st.checkbox('log(y axis)')
     with col_hue:
         hue_default = find_default(hue_options,'location')
         hue = st.selectbox('Group by',hue_options, format_func = str_formatter, index=hue_default)
   
-    st.plotly_chart(line_plotter(x,y,date_selected,hue))
+    st.plotly_chart(line_plotter(x,y,date_selected,hue,xlog,ylog))
     
 def app():
     '''Bulk of webgui, calls relevant functions'''
@@ -136,3 +140,6 @@ def app():
         hue_options += list(df.select_dtypes(include=object).columns)
 
         build_own(x_options,y_options,hue_options,date_selected)
+
+    
+    
