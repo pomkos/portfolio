@@ -13,12 +13,12 @@ footer {visibility: hidden;}
 </script>
 """
 
-st.write('<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+# st.write('<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-with st.beta_expander("Welcome to Pete's Perfect Little Projects", expanded=True):
-    select_options = ['Covid dash','Protein calculator','Venmo calculator']
-    explore = st.radio('',select_options,index=0)
+#with st.beta_expander("Welcome to Pete's Perfect Little Projects", expanded=True):
+select_options = ['Covid dash','Protein calculator','Venmo calculator']
+explore = st.sidebar.radio('Select a project!',select_options,index=0)
 
     
 if explore == "venmo calculator".capitalize():
