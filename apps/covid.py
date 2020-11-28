@@ -201,7 +201,7 @@ def app():
         premade(plot_selected, date_selected)
 
     if view_type == "Build Your Own!":
-        date_selected = st.date_input('Change the dates?', value=(dt.datetime(2020,3,1),dt.datetime.now()))
+        date_selected = st.date_input('Change the dates?', value=(dt.datetime(2020,1,1),dt.datetime.now()))
         x_options = []
         y_options = []
         hue_options = []
