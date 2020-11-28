@@ -69,7 +69,7 @@ class saveInfo():
 
         # initialize engine
         parent = os.path.dirname(os.getcwd()) # get parent of current directory
-        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/payme.db')
         
         meta = sq.MetaData()
         if showme=='no':
@@ -278,18 +278,28 @@ def venmo_calc(my_dic, total, tax=0, tip=0, misc_fees=0):
         output_money = {}
         for key in request.keys():
             output_money[key] = [round(request[key],2)]
-        df_out = pd.DataFrame.from_dict(output_money)
-        df_out = df_out.reset_index(drop=True)
-        df_out = df_out.T
-        df_out.columns = ['Amount']
+        
+        request_link = st.button('Create Request Links')
+        send_link = st.button('Create Send Links')
+        
+        if request_link == True:
+            v_user = None
+            venmo_link_maker(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,v_user,link_type='request')
+            st.success('Request links generated! Click them to open venmo and send the request.')
+        if send_link == True:
+            v_user = st.text_input('What is your venmo username?')
+            if not v_user:
+                st.warning('Please give your venmo username')
+            else:
+                venmo_link_maker(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,v_user,link_type='send')
+                st.success('Send links generated! Copy and send them to the payers, all they have to do is click and submit!')
 
-        venmo_request(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,df_out)
-
+            
         return output_money, my_dic, tip_perc, tax_perc, fee_part
 
-def venmo_request(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,df_out):
+def venmo_link_maker(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,v_user,link_type):
     '''
-    Generates a link that directs user to venmo app with prefilled options
+    Generates a request-link that directs user to venmo app with prefilled options
 
     ASCII table source: http://www.asciitable.com/
     Use Hx column, add a % before it
@@ -305,18 +315,21 @@ def venmo_request(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,df
 #     .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
 #     </style>'''
 
-    # used in venmo_request
+    # used in venmo_link_maker
     html_table_header = '''
     <table class="tg">
     '''
-    # used in venmo_request
+    # used in venmo_link_maker
     html_table_end = '''</tr>
     </tbody>
     </table>'''
     link_output = {}
-
-    for key in request.keys():
+    if link_type=='request':
         txn = 'charge' # charge or pay
+    if link_type=='send':
+        txn = 'pay'
+        
+    for key in request.keys():
         audience = 'private' # private, friends, or public
         amount = round(request[key],2) # total requested dollars
 
@@ -327,13 +340,14 @@ def venmo_request(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,df
         if tax > 0.0:
             statement += f', tax was {round(tax_perc*100,2)}%25'
         if misc_fees > 0.0:
-            statement += f', fees were {round(fee_part,2)}'
+            statement += f', fees were ${round(fee_part,2)}'
 
         statement += '.%0AMade with %3C3 at payme.peti.work' # %0A creates a new line
         statement = statement.replace(' ','%20') # replace spaces for url parameter
-        link = f"https://venmo.com/?txn={txn}&audience={audience}&recipients={key}&amount={amount}&note={statement}"
-        #link_html = f"<a href='{link}' target='_blank'>Click me for {key}'s sake!</a>"
-        #link_md = f"[Click me for {key}'s sake!](link)"
+        if link_type=='send':
+            link = f"https://venmo.com/?txn={txn}&audience={audience}&recipients={v_user}&amount={amount}&note={statement}"
+        else:
+            link = f"https://venmo.com/?txn={txn}&audience={audience}&recipients={key}&amount={amount}&note={statement}"
         link_output[key] = link
 
     html_table_data = f'''
@@ -351,10 +365,9 @@ def venmo_request(request,my_dic,tip_perc,tax_perc,fee_part,tip,tax,misc_fees,df
         html_table_data += html_row
 
     html_table = html_table_header + html_table_data + html_table_end
-
     st.write(html_table, unsafe_allow_html=True)
     st.write('')
-
+    
 def app():
     '''
     Only purpose is to start the app. Own function so the rest of the functions can be organized in a logical way.

@@ -20,7 +20,7 @@ class saveInfo():
 
         # initialize engine
         parent = os.path.dirname(os.getcwd()) # get parent of current directory
-        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/brotein.db')
         meta = sq.MetaData()
         tz = timezone('US/Eastern')
 
@@ -102,43 +102,44 @@ def start(button=None):
         pass
     st.title("Never get scammed by Big Bro again!")
 
-    analysis = st.selectbox("",('Brotein Powder','Brotein Snack'))
+    analysis = st.select_slider("",['Brotein Powder','Brotein Snack'])
     
     if analysis == 'Brotein Powder':
+
         ### Whey Layout ###
         st.write("## Let's compare wheys bro!")
+        
+        with st.beta_expander('Click me to calculate something', expanded=False):
+            col_pro_name, col_pro_price = st.beta_columns(2)
+            with col_pro_name:
+                whey_brand = st.text_input(label='Brand name', key='brand_whey',)
+            with col_pro_price:
+                price = st.number_input(label='Price ($)*',step=10.0)    
 
-        col_pro_name, col_pro_price = st.beta_columns(2)
-
-        with col_pro_name:
-            whey_brand = st.text_input(label='Brand name', key='brand_whey',)
-        with col_pro_price:
-            price = st.number_input(label='Price ($)*',step=10.0)    
-
-        col_serv, col_cal, col_pro = st.beta_columns(3)
-        with col_cal:
-            cal_per_scoop = st.number_input(label='Calories per scoop*',step=10.0)
-        with col_serv:
-            servings = st.number_input(label='Scoops per bag*',step=10.0)
-        with col_pro:
-            protein_scoop_g = st.number_input(label='Protein per scoop (g)*',step=10.0)
-
-        try:
-            bropow_dict = {
-                'brand':whey_brand,
-                'price':price,
-                'g_per_scoop':protein_scoop_g,
-                'servings_in_bag':servings,
-                'cal_per_scoop':cal_per_scoop
-            }
-            bro_dict,statement = brotein(bropow_dict,kind='powder')
-            st.info(statement)
+            col_serv, col_cal, col_pro = st.beta_columns(3)
+            with col_cal:
+                cal_per_scoop = st.number_input(label='Calories per scoop*',step=10.0)
+            with col_serv:
+                servings = st.number_input(label='Scoops per bag*',step=10.0)
+            with col_pro:
+                protein_scoop_g = st.number_input(label='Protein per scoop (g)*',step=10.0)
             submit = st.button(label='Submit',key='submit_powder')
-            if submit == True:
-                submit_info(row_info = bro_dict,kind='powder')
-        except:
-            st.warning('Not enough info to calculate')
-            st.warning('NOTE: Some whey proteins have 2 scoops per serving of protein. Make sure to divide by two.')
+
+            try:
+                bropow_dict = {
+                    'brand':whey_brand,
+                    'price':price,
+                    'g_per_scoop':protein_scoop_g,
+                    'servings_in_bag':servings,
+                    'cal_per_scoop':cal_per_scoop
+                }
+                bro_dict,statement = brotein(bropow_dict,kind='powder')
+                st.info(statement)
+                if submit == True:
+                    submit_info(row_info = bro_dict,kind='powder')
+            except:
+                st.warning('Not enough info to calculate')
+                st.warning('NOTE: Some whey proteins have 2 scoops per serving of protein. Make sure to divide by two.')
         show = saveInfo(kind='powder',show=True)
         df_powder = show.show_table(sort_by='Price of 20g Protein',highlight_in='Price of 20g Protein')
         st.table(df_powder)
@@ -146,44 +147,44 @@ def start(button=None):
     else:
         ### Protein Snacks Comparison ###
         st.write("## Let's compare snacks bro!")
+        with st.beta_expander('Click me to calculate something', expanded=False):
+            ### Layout ###
+            col_name, col_price,col_serv = st.beta_columns(3)
+            with col_name:
+                bar_brand = st.text_input(label = 'Brand name', key='brand_bar',)
+            with col_price:
+                bar_price = st.number_input(label='Price ($)*', min_value=0.0, step=10.0,)
+            with col_serv:
+                servings = st.number_input(label='Servings (bars/box)*',min_value=0.0,step=1.0,)        
 
-        ### Layout ###
-        col_name, col_price,col_serv = st.beta_columns(3)
-        with col_name:
-            bar_brand = st.text_input(label = 'Brand name', key='brand_bar',)
-        with col_price:
-            bar_price = st.number_input(label='Price ($)*', min_value=0.0, step=10.0,)
-        with col_serv:
-            servings = st.number_input(label='Servings (bars/box)*',min_value=0.0,step=1.0,)        
+            col_cal,col_fat,col_cho,col_aa = st.beta_columns(4)
+            with col_cal:
+                calories = st.number_input(label='Calories*',min_value=0.0,step=10.0)
+            with col_fat:
+                fat_g = st.number_input(label='Fats (g)',min_value=0.0,step=10.0,)
+            with col_cho:
+                cho_g = st.number_input(label='Carbohydrates (g)',min_value=0.0,step=10.0,)
+            with col_aa:
+                pro_g = st.number_input(label='Protein (g)*',min_value=0.0,step=10.0,)
 
-        col_cal,col_fat,col_cho,col_aa = st.beta_columns(4)
-        with col_cal:
-            calories = st.number_input(label='Calories*',min_value=0.0,step=10.0)
-        with col_fat:
-            fat_g = st.number_input(label='Fats (g)',min_value=0.0,step=10.0,)
-        with col_cho:
-            cho_g = st.number_input(label='Carbohydrates (g)',min_value=0.0,step=10.0,)
-        with col_aa:
-            pro_g = st.number_input(label='Protein (g)*',min_value=0.0,step=10.0,)
-
-        try:
-            ### Calculate ###
-            brobar_dict = {
-                'brand':bar_brand,
-                'price':bar_price,
-                'servings':servings,
-                'calories':calories,
-                'carbs':cho_g,
-                'fats':fat_g,
-                'protein':pro_g
-            }
-            bar_dict, statement = brotein(brobar_dict, kind='bar')
-            st.info(statement)
-            submit = st.button(label='Submit',key='submit_snack')
-            if submit == True:
-                submit_info(row_info=bar_dict, kind='bar')          
-        except:
-            st.warning('Not enough info to calculate')
+            try:
+                ### Calculate ###
+                brobar_dict = {
+                    'brand':bar_brand,
+                    'price':bar_price,
+                    'servings':servings,
+                    'calories':calories,
+                    'carbs':cho_g,
+                    'fats':fat_g,
+                    'protein':pro_g
+                }
+                bar_dict, statement = brotein(brobar_dict, kind='bar')
+                st.info(statement)
+                submit = st.button(label='Submit',key='submit_snack')
+                if submit == True:
+                    submit_info(row_info=bar_dict, kind='bar')          
+            except:
+                st.warning('Not enough info to calculate')
         ### Show Database ###
         show = saveInfo(kind='bar',show=True)
         df_bar = show.show_table(highlight_in='Protein per 100 calories')
@@ -243,14 +244,14 @@ def table_formatter(dataframe,kind):
                              'Num of Servings','Date Added']
         dataframe = dataframe[['Brand','Calories per Scoop','Protein per Scoop',
                                'Protein per 100 calories','Price of 20g Protein',
-                               'Price','Num of Servings','Date Added']]
+                               'Price','Num of Servings']]
     elif kind == 'bar':
         dataframe.columns = ['Brand','Price per Snack','Protein per 100 calories',
                              'Price of 20g Protein','Num of Servings','Carbs','Fats',
                              'Protein','Calories','Price','Date Added', 'Carb/Fat/Pro']
         dataframe = dataframe[['Brand','Calories','Carb/Fat/Pro','Protein per 100 calories',
                                'Price per Snack','Price of 20g Protein','Price',
-                               'Num of Servings','Date Added']]
+                               'Num of Servings']]
     return dataframe
 
 def submit_info(row_info, kind):
