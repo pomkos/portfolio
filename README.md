@@ -17,12 +17,13 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
     * [x] Floats and integers on x-, y-axes but not legend
     * [ ] Only categorical variables in legend
     * [ ] Ability to choose countries outside plotly
-    * [ ] Dynamic plot title
+    * [x] Dynamic plot title
   * [ ] Premade dataset summary
-    * [ ] Descriptive statistics
+    * [x] Descriptive statistics
     * [ ] Comparative statistics
     * [ ] Predictive statistics
-  * [ ] Usermade dataset summary
+    * [x] Usermade customizable dataset summary
+    * [ ] Download customized dataset
   * [ ] Premade heatmaps
   * [ ] Usermade heatmaps
 
