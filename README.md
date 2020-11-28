@@ -4,6 +4,23 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
 * [x] Protein calculator
 * [x] Venmo requests calculator
 * [ ] Covid dashboard (WIP)
+  * [x] Premade plots
+  * [x] Usermade plots
+    * [x] Group by string variables
+    * [x] Date only on x-axis
+    * [x] Floats and integers on x-, y-axes but not legend
+    * [ ] Only categorical variables in legend
+    * [ ] Dynamic plot title
+  * [ ] Premade dataset summary
+    * [ ] Descriptive statistics
+    * [ ] Comparative statistics
+    * [ ] Predictive statistics
+  * [ ] Usermade dataset summary
+  * [ ] Premade heatmaps
+  * [ ] Usermade heatmaps
+
+# Screenshot
+<img src="https://github.com/pomkos/portfolio/blob/master/sample.png" width="620">
 
 # How to Run
 
