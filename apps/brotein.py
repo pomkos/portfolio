@@ -16,9 +16,11 @@ class saveInfo():
         import sqlalchemy as sq
         import datetime as dt
         from pytz import timezone 
+        import os
 
         # initialize engine
-        engine = sq.create_engine('sqlite:///data/brotein.db')
+        parent = os.path.dirname(os.getcwd()) # get parent of current directory
+        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
         meta = sq.MetaData()
         tz = timezone('US/Eastern')
 

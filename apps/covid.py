@@ -17,7 +17,10 @@ parent = os.path.dirname(os.getcwd()) # get parent of current directory
 engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
 cnx = engine.connect()
 meta = sq.MetaData()
-
+    
+parent = os.path.dirname(os.getcwd()) # get parent of current directory
+engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+cnx = engine.connect()
 raw_request = '''
 SELECT *
 FROM covid_world

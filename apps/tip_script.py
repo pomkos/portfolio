@@ -63,14 +63,17 @@ class saveInfo():
             Misc fees evenly divided amongst all individuals
         '''
         import sqlalchemy as sq
+        import os
         import datetime as dt
         from pytz import timezone 
 
         # initialize engine
-        engine = sq.create_engine('sqlite:///data/payme.db')
+        parent = os.path.dirname(os.getcwd()) # get parent of current directory
+        engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+        
         meta = sq.MetaData()
         if showme=='no':
-            # table format in db
+        # table format in db
             self.payme_now = sq.Table(
                'payme_now', meta, 
                sq.Column('id', sq.Integer, primary_key = True), 

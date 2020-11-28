@@ -14,9 +14,9 @@ def app():
     world_df['pos_per_tests'] = world_df['new_cases']/world_df['new_tests']
 
     parent = os.path.dirname(os.getcwd()) # get parent of current directory
-    
-    location = f'sqlite:///{parent}/covid.db'
-    cnx = sq.create_engine(location)
+    engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+    cnx = engine.connect()
+
     usa_df.to_sql('covid_states',con=cnx,if_exists='replace',index=False)
     world_df.to_sql('covid_world',con=cnx,if_exists='replace',index=False)
 
