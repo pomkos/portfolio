@@ -14,13 +14,13 @@ import os # current director
 ## Load data ##
 ###############
 parent = os.path.dirname(os.getcwd()) # get parent of current directory
+
+#########################################################################
 engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
+#########################################################################
 cnx = engine.connect()
 meta = sq.MetaData()
-    
-parent = os.path.dirname(os.getcwd()) # get parent of current directory
-engine = sq.create_engine(f'sqlite:///{parent}/portfolio/data/covid.db')
-cnx = engine.connect()
+
 raw_request = '''
 SELECT *
 FROM covid_world
@@ -47,48 +47,72 @@ def find_default(my_list, my_string):
     return my_index
 
 ### PLOT FUNCTIONS ###
-def scat_plotter(x,y,hue='location'):
+def scat_plotter(x,y,hue='location',xlog=False,ylog=False,title=None):
     '''Plotly plots a scatterplot'''
+    if title == None:
+        title= f'{str_formatter(y)} vs {str_formatter(x)}'
     my_plot = px.scatter(df,
-               x= x,
-               y= y,
-               color=hue,
-               trendline='ols',
-               labels={
-                     x: str_formatter(x),
-                     y: str_formatter(y),
-                     hue:str_formatter(hue)
-                   })
+                         x= x,
+                         log_x=xlog,
+                         log_y=ylog,
+                         title=title,
+                         y= y,
+                         color=hue,
+                         trendline='ols',
+                         labels={
+                             x: str_formatter(x),
+                             y: str_formatter(y),
+                             hue:str_formatter(hue)
+                           })
+    a = px.get_trendline_results(my_plot).px_fit_results.iloc[0].rsquared
     return my_plot
 
-def line_plotter(x,y,date_selected, hue='location',xlog=False,ylog=False):
+def line_plotter(x,y,date_selected, hue='location',xlog=False,ylog=False,title=None):
     '''Plotly plots a lineplot'''
+    if title == None:
+        title= f'{str_formatter(y)} vs {str_formatter(x)}'
     my_plot = px.line(df,
-                 x= x,
-                 log_x = xlog,
-                 log_y = ylog,
-                 y= y,
-                 range_x = date_selected,
-                 color=hue,
-                 labels={
-                     x: str_formatter(x),
-                     y: str_formatter(y),
-                     hue:str_formatter(hue)
-                 }
-                )
+                      x= x,
+                      log_x = xlog,
+                      log_y = ylog,
+                      y= y,
+                      title = title,
+                      range_x = date_selected,
+                      color=hue,
+                      labels={
+                          x: str_formatter(x),
+                          y: str_formatter(y),
+                          hue:str_formatter(hue)
+                      }
+                     )
     return my_plot
 
 ### VIEWS GUI ###
 def premade(plot_selected, date_selected):
     '''Presents a couple premade, sanitized graphs'''
     if 'Deaths per mill' in plot_selected:
-        st.plotly_chart(line_plotter('date','new_deaths_smoothed_per_million',date_selected),use_container_width = False)
+        st.plotly_chart(line_plotter('date',
+                                     'new_deaths_smoothed_per_million',
+                                     date_selected,
+                                     title='Deaths per million by country'),
+                        use_container_width = False)
     if 'Hosp patients per mill' in plot_selected:
-        st.plotly_chart(line_plotter('date','hosp_patients_per_million',date_selected),use_container_width = False)
+        st.plotly_chart(line_plotter('date',
+                                     'hosp_patients_per_million',
+                                     date_selected,
+                                     title='Hospital patients per million by country'),
+                        use_container_width = False)
     if 'Positivity rate' in plot_selected:
-        st.plotly_chart(line_plotter('date','positive_rate',date_selected),use_container_width = False)
+        st.plotly_chart(line_plotter('date',
+                                     'positive_rate',
+                                     date_selected,
+                                     title='Positivity rate by country'),
+                        use_container_width = False)
     if 'Hospital vs Deaths' in plot_selected:
-        st.plotly_chart(scat_plotter('new_cases_per_million','hosp_patients_per_million'), use_container_width = False)
+        st.plotly_chart(scat_plotter('new_cases_per_million',
+                                     'hosp_patients_per_million',
+                                     title='Hospital patients related to new cases'), 
+                        use_container_width = False)
         
     update = st.button('Update Database')
     if update == True:
@@ -115,6 +139,53 @@ def build_own(x_options,y_options,hue_options,date_selected):
   
     st.plotly_chart(line_plotter(x,y,date_selected,hue,xlog,ylog))
     
+def view_dataset(dataset, columns=None):
+    '''View the dataset, certain or all columns'''
+    if columns == None:
+        columns = ['All'] + list(dataset.columns)
+    columns.sort()
+    with st.beta_expander('Settings',expanded=False):
+        column_choices = st.multiselect('Select variables',
+                                        columns,
+                                        default = ['location','date','new_cases_per_million', 
+                                                   'new_deaths_per_million', 'population',
+                                                   'population_density'],
+                                        format_func=str_formatter)
+
+        col_date_df, col_group,col_grp_desc = st.beta_columns(3)   
+        if 'All' in column_choices:
+            column_choices = list(dataset.columns)
+            st.stop()
+        with col_date_df:
+            date_range_choices = st.date_input('Change the dates?', value=(dt.datetime(2020,1,1),dt.datetime.now()),key='chg_dts_df')
+        with col_group:
+            group_choices = st.multiselect('What should we groupby?',
+                                           ['Nothing'] + column_choices,
+                                           format_func=str_formatter,default=['location'])
+        with col_grp_desc:
+            group_desc = st.selectbox('How should each variable be grouped?',['Mean','Median','Sum','Min','Max'])
+
+        show_df = df[column_choices]
+        show_df = show_df[(show_df['date']>=pd.to_datetime(date_range_choices[0])) & 
+                          (show_df['date']<=pd.to_datetime(date_range_choices[1]))]
+        if (len(group_choices) == 0):
+            show_df = show_df
+        elif ('Nothing' in group_choices):
+            show_df = show_df
+        else:
+            if 'Mean' in group_desc:
+                show_df = show_df.groupby(group_choices).mean()
+            if 'Median' in group_desc:
+                show_df = show_df.groupby(group_choices).median()
+            if 'Sum' in group_desc:
+                show_df = show_df.groupby(group_choices).sum()
+            if 'Min' in group_desc:
+                show_df = show_df.groupby(group_choices).min()
+            if 'Max' in group_desc:
+                show_df = show_df.groupby(group_choices).max()
+    st.table(show_df)
+    st.success(f'Grouped each of {[str_formatter(x) for x in group_choices]} by {group_desc}!')
+    
 def app():
     '''Bulk of webgui, calls relevant functions'''
     st.title('Covid Dash')
@@ -140,6 +211,9 @@ def app():
         hue_options += list(df.select_dtypes(include=object).columns)
 
         build_own(x_options,y_options,hue_options,date_selected)
-
-    
-    
+        
+    if view_type == "Dataset":
+        view_dataset(df)
+################################# FOR TESTING #################################
+# app()
+###############################################################################

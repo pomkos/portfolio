@@ -151,7 +151,7 @@ def start(button=None):
                 ```
             2. Input the rest of the fees or tips as needed""")
 
-    receipt_input = st.text_area(label="Add name and food prices")
+    receipt_input = st.text_area(label="Add name and food prices*")
 
     col1, col2, col3 = st.beta_columns(3)
 
@@ -160,7 +160,7 @@ def start(button=None):
     with col2:
         tax_input = st.number_input("Tax in dollars",step=1.0)
     with col3:
-        tip_input = st.number_input("Tip in dollars",step=1.0)
+        tip_input = st.number_input("Tip in dollars",step=5.0)
     
     rf = receiptFormat()
     # a dictionary of name(s) and sum of amount
@@ -181,7 +181,7 @@ def start(button=None):
     precheck_sum = sum(data.values())
     total_value = round(precheck_sum+tax_input+tip_input+fees_input,2) # prefill the total
 
-    total_input = st.number_input("Calculated Total",step=1.0,value=total_value)
+    total_input = st.number_input("Calculated Total*",step=10.0,value=total_value)
 
     try:
         # gets a dictionary of total spent, dictionary of spent on food, percent tip, percent tax, and misc fees per person
