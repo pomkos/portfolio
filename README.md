@@ -1,46 +1,64 @@
-# streamlit-multiapps
-A simple framework in python to create multi page web application using streamlit.
+# Portfolio
+Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
 
 # How to Run
 
 1. Clone the repository:
 ```
-$ git clone git@github.com:upraneelnihar/streamlit-multiapps
-$ cd streamlit-multiapps
+git clone https://github.com/pomkos/portfolio
+cd portfolio
 ```
 
-2. Install dependencies:
+2. Create a conda environment (optional):
+
 ```
-$ pip install -r requirements.txt
+conda create --name "port_env"
 ```
 
+3. Activate environment, install python, install dependencies.
+
+```
+conda activate port_env
+conda install python=3.8
+pip install -r requirements.txt
+```
 3. Start the application:
 ```
-streamlit run app.py
+streamlit run dash.py
 ```
+5. Access the portfolio at `localhost:8501`
+# How to Host Headless
 
-# How to add new app
-
-1. Add a new python file in `apps/`  folder with a function named `app`.
-
-```
-# apps/new_app.py
-
-import streamlit as st
-
-def app():
-    st.title('New App')
-```
-
-2. Now add it to `app.py`
+1. Create a new file outside the `portfolio` directory:
 
 ```
-from apps import newapp # import your app modules here
-
-app = MultiApp()
-
-# Add all your application here
-app.add_app("New App", newapp.app)
+cd
+nano portfolio.sh
 ```
 
-That's it your new app is added to your application and is live in default browser.
+2. Paste the following in it, then save and exit:
+
+```
+#!/bin/bash
+
+source ~/anaconda3/etc/profile.d/conda.sh
+
+cd ~/portfolio
+conda activate port_env
+
+nohup streamlit run dash.py --server.port 8503&
+```
+
+3. Edit crontab so portfolio is started when server reboots
+
+```
+crontab -e
+```
+
+4. Add the following to the end, then save and exit
+
+```
+@reboot /home/portfolio.sh
+```
+
+5. Access the portfolio at `localhost:8503`
