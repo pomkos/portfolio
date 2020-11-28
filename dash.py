@@ -17,7 +17,7 @@ st.write('<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 with st.beta_expander("Welcome to Pete's Perfect Little Projects", expanded=True):
-    select_options = ['Protein calculator','Venmo calculator', 'Covid dash']
+    select_options = ['Covid dash','Protein calculator','Venmo calculator']
     explore = st.radio('',select_options,index=2)
 
     
