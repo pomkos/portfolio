@@ -20,7 +20,7 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
   * [ ] Usermade heatmaps
 
 # Screenshot
-<img src="https://github.com/pomkos/portfolio/blob/master/sample.png" width="620">
+<img src="https://github.com/pomkos/portfolio/blob/main/sample.png" width="620">
 
 # How to Run
 
