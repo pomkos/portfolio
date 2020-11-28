@@ -1,8 +1,14 @@
 # Portfolio
-Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit. These include:
+Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
 
-* [x] Protein calculator
-* [x] Venmo requests calculator
+## Feature list
+* [x] [Protein calculator](https://protein.peti.work)
+ * [x] Whey cost and content
+ * [x] Snack cost and content
+ * [x] Option to submit to database
+* [x] [Venmo requests calculator](https://payme.peti.work)
+ * [x] Customized prefilled venmo link
+ * [x] Option to submit to database
 * [ ] Covid dashboard (WIP)
   * [x] Premade plots
   * [x] Usermade plots
