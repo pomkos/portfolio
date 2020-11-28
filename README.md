@@ -1,5 +1,9 @@
 # Portfolio
-Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
+Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit. These include:
+
+* [x] Protein calculator
+* [x] Venmo requests calculator
+* [ ] Covid dashboard (WIP)
 
 # How to Run
 
