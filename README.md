@@ -9,7 +9,7 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
 * [x] [Venmo requests calculator](https://payme.peti.work)
   * [x] Customized prefilled venmo link
   * [x] Option to submit to database
-* [ ] [Covid dashboard (WIP)](portfolio.peti.work)
+* [ ] [Covid dashboard (WIP)](https://portfolio.peti.work)
   * [x] Premade plots
   * [x] Usermade plots
     * [x] Group by string variables
