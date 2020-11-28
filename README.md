@@ -10,6 +10,7 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
     * [x] Date only on x-axis
     * [x] Floats and integers on x-, y-axes but not legend
     * [ ] Only categorical variables in legend
+    * [ ] Ability to choose countries outside plotly
     * [ ] Dynamic plot title
   * [ ] Premade dataset summary
     * [ ] Descriptive statistics
