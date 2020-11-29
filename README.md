@@ -82,7 +82,10 @@ crontab -e
     * [x] Group by string variables
     * [x] Date only on x-axis
     * [x] Floats and integers on x-, y-axes but not legend
+    * [ ] Scatter, line, bar plots
+    * [ ] OLS options for scatterplot
     * [ ] Only categorical variables in legend
+    * [ ] Dynamix x/y axis options
     * [ ] Ability to choose countries outside plotly
     * [x] Dynamic plot title
   * [ ] Premade dataset summary
