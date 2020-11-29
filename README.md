@@ -1,12 +1,12 @@
 # Table of Contents  
-1. [Description](#portfolio)  
+1. [Description](#description)  
 2. [Screenshot](#screenshot)  
 3. [Instructions](#instructions)
    1. [How to Run](#how-to-run)
    2. [How to Host](#how-to-host)
 4. [Features](#feature-list)
 
-# Portfolio
+# Description
 Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
 
 See at: https://portfolio.peti.work
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 streamlit run dash.py
 ```
 5. Access the portfolio at `localhost:8501`
-## How to Host Headless
+## How to Host
 
 1. Create a new file outside the `portfolio` directory:
 
