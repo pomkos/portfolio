@@ -9,7 +9,7 @@
 # Description
 Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
 
-See at: https://portfolio.peti.work
+[My Portfolio](https://portfolio.peti.work)
 
 # Screenshot
 <img src="https://github.com/pomkos/portfolio/blob/main/sample.png" width="620">
