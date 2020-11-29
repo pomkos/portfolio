@@ -1,3 +1,10 @@
+##### Table of Contents  
+1. [Description](#portfolio)  
+2. [Screenshot](#screenshot)  
+3. [Instructions](#instructions)
+ 1. [How to Run](#how-to-run)
+ 2. [How to Host](#how-to-host)
+4. [Features](#feature-list)
 # Portfolio
 Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
 
