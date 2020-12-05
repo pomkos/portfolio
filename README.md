@@ -1,10 +1,11 @@
 # Table of Contents  
 1. [Description](#description)  
 2. [Screenshot](#screenshot)  
-3. [Instructions](#instructions)
-   1. [How to Run](#how-to-run)
-   2. [How to Host](#how-to-host)
-4. [Features](#feature-list)
+3. [Features](#feature-list)
+4. [How Tos](#how-tos)
+   1. [Run](#run)
+   2. [Host](#host)
+
 
 # Description
 Collection of finished and "finished" projects to demo in a shiny new webgui using streamlit.
@@ -43,8 +44,8 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
   * [ ] Premade heatmaps
   * [ ] Usermade heatmaps
 
-# Instructions
-## How to Run
+# How Tos
+## Run
 
 1. Clone the repository:
 ```
@@ -70,7 +71,7 @@ pip install -r requirements.txt
 streamlit run dash.py
 ```
 5. Access the portfolio at `localhost:8501`
-## How to Host
+## Host
 
 1. Create a new file outside the `portfolio` directory:
 
