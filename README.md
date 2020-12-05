@@ -1,8 +1,7 @@
 # Table of Contents  
 1. [Description](#description)  
 2. [Screenshot](#screenshot)  
-3. [Features](#feature-list)
-4. [How Tos](#how-tos)
+3. [How Tos](#how-tos)
    1. [Run](#run)
    2. [Host](#host)
 
@@ -14,35 +13,6 @@ Collection of finished and "finished" projects to demo in a shiny new webgui usi
 
 # Screenshot
 <img src="https://github.com/pomkos/portfolio/blob/main/sample.png" width="620">
-
-# Feature list
-* [x] Protein calculator [(demo)](https://protein.peti.work), [(repo)](https://github.com/pomkos/brotein)
-  * [x] Whey cost and content
-  * [x] Snack cost and content
-  * [x] Option to submit to database
-* [x] Venmo requests calculator[(demo)](https://payme.peti.work), [(repo)](https://github.com/pomkos/payme)
-  * [x] Customized prefilled venmo link
-  * [x] Option to submit to database
-* [ ] Covid dashboard (WIP) [(demo)](https://covid.peti.work), [(repo)](https://github.com/pomkos/covid_dash)
-  * [x] Premade plots
-  * [x] Usermade plots
-    * [x] Group by string variables
-    * [x] Date only on x-axis
-    * [x] Floats and integers on x-, y-axes but not legend
-    * [ ] Scatter, line, bar plots
-    * [ ] OLS options for scatterplot
-    * [ ] Only categorical variables in legend
-    * [ ] Dynamix x/y axis options
-    * [ ] Ability to choose countries outside plotly
-    * [x] Dynamic plot title
-  * [ ] Premade dataset summary
-    * [x] Descriptive statistics
-    * [ ] Comparative statistics
-    * [ ] Predictive statistics
-    * [x] Usermade customizable dataset summary
-    * [ ] Download customized dataset
-  * [ ] Premade heatmaps
-  * [ ] Usermade heatmaps
 
 # How Tos
 ## Run
