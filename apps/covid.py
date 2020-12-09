@@ -19,7 +19,6 @@ import base64
 
 parent = os.path.dirname(os.getcwd()) # get parent of current directory
 #########################################################################
-st.write(parent)
 engine = sq.create_engine(f'sqlite:///data/covid.db')
 #########################################################################
 cnx = engine.connect()
