@@ -354,7 +354,7 @@ def app():
     '''Bulk of webgui, calls relevant functions'''
     st.title('Covid Dash')
     with st.beta_expander('Which dataset?'):
-        data_choice = st.radio('',['United States','World'],index=1)
+        data_choice = st.radio('',['United States','World'],index=1,key='dataset_options')
         
     if data_choice.lower() == 'united states':
         st.info('Not implemented (yet)')
