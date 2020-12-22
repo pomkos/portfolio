@@ -130,3 +130,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/covid.db
+data/covid.db
