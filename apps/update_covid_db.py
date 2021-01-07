@@ -19,5 +19,7 @@ def app():
 
     usa_df.to_sql('covid_states',con=cnx,if_exists='replace',index=False)
     world_df.to_sql('covid_world',con=cnx,if_exists='replace',index=False)
-
+    print(f'New data saved to the database today ({dt.datetime.now()}!)')
     return f'New data saved to the database today ({dt.datetime.now()}!)'
+
+app()
