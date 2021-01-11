@@ -19,14 +19,14 @@ import base64
 
 parent = os.path.dirname(os.getcwd()) # get parent of current directory
 #########################################################################
-engine = sq.create_engine(f'sqlite:///data/covid.db')
+engine = sq.create_engine(f'postgres://postgres:helllo@192.168.1.240:5432')
 #########################################################################
 cnx = engine.connect()
 meta = sq.MetaData()
 
 raw_request = '''
 SELECT *
-FROM covid_world
+FROM covid_world2
 '''
 
 ResultSet = cnx.execute(raw_request).fetchall()

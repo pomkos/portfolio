@@ -1,3 +1,6 @@
+# temp files
+*.out
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +130,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/covid.db
+data/covid.db

@@ -7,3 +7,4 @@ statsmodels # ols regression line in plotly scatterplot
 streamlit # webgui
 sqlalchemy # sqlite db examination
 psycopg2-binary # required for connecting to postgres
+pycountry # needed for maps
